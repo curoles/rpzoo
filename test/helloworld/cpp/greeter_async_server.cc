@@ -163,7 +163,7 @@ class ServerImpl final {
   std::unique_ptr<Server> server_;
 };
 
-int main(int argc, char** argv) {
+int main(int argc [[maybe_unused]], char** argv [[maybe_unused]]) {
   ServerImpl server;
   server.Run();
 

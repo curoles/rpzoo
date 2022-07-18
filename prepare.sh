@@ -15,6 +15,16 @@ if [ ! -f "$TOOLS_DIR/cmake/bin/cmake" ]; then
   popd
 fi
 
+FOUND_PY_GRPCIO=`pip3 list | grep grpcio`
+if [ "$FOUND_PY_GRPCIO" == "" ]; then
+  python3 -m pip install grpcio
+fi
+
+FOUND_PY_GRPCIO_TOOLS=`pip3 list | grep grpcio-tools`
+if [ "$FOUND_PY_GRPCIO_TOOLS" == "" ]; then
+  python3 -m pip install grpcio-tools
+fi
+
 export PATH=$TOOLS_DIR/cmake/bin:$PATH
 
 cmake --version

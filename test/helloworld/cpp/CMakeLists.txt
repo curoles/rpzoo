@@ -17,22 +17,16 @@
 # See cmake_externalproject/CMakeLists.txt for all-in-one cmake build
 # that automatically builds all the dependencies before building helloworld.
 
-#cmake_minimum_required(VERSION 3.5.1)
-
-#project(HelloWorld C CXX)
-
 find_package(Threads REQUIRED)
 
 #include(../cmake/common.cmake)
 # Since FetchContent uses add_subdirectory under the hood, we can use
 # the grpc targets directly from this build.
-set(_PROTOBUF_LIBPROTOBUF protobuf) #libprotobuf)
+set(_PROTOBUF_LIBPROTOBUF libprotobuf)
 set(_REFLECTION grpc++_reflection)
-#set(_PROTOBUF_PROTOC $<TARGET_FILE:protoc>)
-set(_PROTOBUF_PROTOC ${gRPC_BIN_DIR}/protoc)
+set(_PROTOBUF_PROTOC $<TARGET_FILE:protoc>)
 set(_GRPC_GRPCPP grpc++)
-#set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
-set(_GRPC_CPP_PLUGIN_EXECUTABLE ${gRPC_BIN_DIR}/grpc_cpp_plugin)
+set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
 
 # Proto file
 get_filename_component(hw_proto "../helloworld.proto" ABSOLUTE)
@@ -73,11 +67,9 @@ foreach(_target
   greeter_callback_client greeter_callback_server 
   greeter_async_client greeter_async_client2 greeter_async_server)
   add_executable(${_target} "${_target}.cc")
-  add_dependencies(${_target} grpc)
   target_link_libraries(${_target}
     hw_grpc_proto
     ${_REFLECTION}
     ${_GRPC_GRPCPP}
-    ${_PROTOBUF_LIBPROTOBUF}
-    libgpr.a pthread absl_base absl_synchronization libgrpc.a libssl.a libcrypto.a libupb.a)
+    ${_PROTOBUF_LIBPROTOBUF})
 endforeach()

@@ -40,7 +40,7 @@ using helloworld::HelloRequest;
 
 // Logic and data behind the server's behavior.
 class GreeterServiceImpl final : public Greeter::Service {
-  Status SayHello(ServerContext* context, const HelloRequest* request,
+  Status SayHello(ServerContext* context [[maybe_unused]], const HelloRequest* request,
                   HelloReply* reply) override {
     std::string prefix("Hello ");
     reply->set_message(prefix + request->name());
@@ -69,7 +69,7 @@ void RunServer() {
   server->Wait();
 }
 
-int main(int argc, char** argv) {
+int main(int argc [[maybe_unused]], char** argv [[maybe_unused]]) {
   RunServer();
 
   return 0;

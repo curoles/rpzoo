@@ -74,7 +74,7 @@ void RunServer() {
   server->Wait();
 }
 
-int main(int argc, char** argv) {
+int main(int argc [[maybe_unused]], char** argv [[maybe_unused]]) {
   RunServer();
 
   return 0;
