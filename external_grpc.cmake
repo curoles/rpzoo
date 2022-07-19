@@ -14,6 +14,14 @@
 #    INSTALL_COMMAND make install
 #    UPDATE_COMMAND ""
 #)
+#include(external_grpc.cmake)
+#ExternalProject_Get_property(grpc INSTALL_DIR)
+#set(gRPC_BIN_DIR ${INSTALL_DIR}/bin)
+#set(gRPC_LIB_DIR ${INSTALL_DIR}/lib)
+#set(gRPC_INCLUDE_DIR ${INSTALL_DIR}/include)
+#message(STATUS "gRPC installation: ${INSTALL_DIR}")
+#include_directories(${gRPC_INCLUDE_DIR})
+#link_directories(${gRPC_LIB_DIR})
 
 include(FetchContent)
 FetchContent_Declare(
