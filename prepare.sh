@@ -56,5 +56,37 @@ if [ "$FOUND_PY_GRPCIO_TOOLS" == "" ]; then
   python3 -m pip install grpcio-tools
 fi
 
+echo "${bold}${green}Check Erlang/OTP installation${normal}"
+if [ ! -f "$TOOLS_DIR/erlang/bin/erl" ]; then
+  pushd $TOOLS_DIR
+  wget -q -O otp_src.tar.gz https://github.com/erlang/otp/releases/download/OTP-25.0.3/otp_src_25.0.3.tar.gz
+  rm -rf ./otp_src_25.0.3
+  tar -C $TOOLS_DIR -zxf otp_src.tar.gz
+  cd otp_src_25.0.3
+  export ERL_TOP=`pwd`
+  ./configure --prefix=$TOOLS_DIR/erlang
+  make
+  make install
+  cd ..
+  rm otp_src.tar.gz
+  rm -rf ./otp_src_25.0.3
+  popd
+fi
+
+export PATH=$TOOLS_DIR/erlang/bin:$PATH
+erl -version
+
+echo "${bold}${green}Check Elixir installation${normal}"
+if [ ! -f "$TOOLS_DIR/elixir/bin/elixir" ]; then
+  pushd $TOOLS_DIR
+  wget -q -O elixir.zip https://github.com/elixir-lang/elixir/releases/download/v1.13.4/Precompiled.zip
+  unzip elixir.zip -d elixir
+  rm elixir.zip
+  popd
+fi
+
+export PATH=$TOOLS_DIR/elixir/bin:$PATH
+elixir --version
+
 echo "${bold}${cyan}Env variable PATH is:${normal}"
 echo $PATH
